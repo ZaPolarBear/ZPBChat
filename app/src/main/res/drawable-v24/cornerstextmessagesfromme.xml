@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<item>
+    <shape>
+        <corners android:topLeftRadius="16dp"
+            android:bottomRightRadius="0dp"
+            android:bottomLeftRadius="16dp"
+            android:topRightRadius="16dp"/>
+        <solid android:color="@color/cardview_shadow_start_color"/>
+    </shape>
+</item>
+</selector>

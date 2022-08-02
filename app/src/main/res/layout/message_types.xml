@@ -97,7 +97,7 @@
             android:layout_marginRight="210dp"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/ic_play_arrow_white_24dp" />
+            android:src="@drawable/ic_arrow_left" />
 
         <ImageView
             android:id="@+id/imgPause"
@@ -107,7 +107,7 @@
             android:layout_marginRight="210dp"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/ic_pause_white_24dp"
+            android:src="@drawable/ic_play"
             android:visibility="gone" />
 
         <TextView
@@ -143,7 +143,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/play_pause_bg"
-            android:src="@drawable/ic_play_arrow_white_24dp"
+            android:src="@drawable/ic_play"
             android:focusable="true" />
         <ImageView
             android:clickable="true"
@@ -151,7 +151,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/play_pause_bg"
-            android:src="@drawable/ic_pause_white_24dp"
+            android:src="@drawable/ic_pause"
             android:visibility="gone"
             android:focusable="true" />
         <TextView
