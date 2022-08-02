@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/textMessageIncoming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="110dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/cornerstextmessagesfromother">
+
+
+        <TextView
+            android:id="@+id/receiver_message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:padding="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:fontFamily="@font/montserrat_bold"
+            android:autoLink="all"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:fontFamily="@font/montserrat_bold"
+            android:id="@+id/reciver_time"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="4dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/white"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/textMessageOutcoming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/cornerstextmessagesfromme">
+
+        <TextView
+            android:id="@+id/sender_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/sender_message_text"
+            android:layout_alignBottom="@+id/sender_message_text"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/sender_message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:paddingBottom="2dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:autoLink="all"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/outcomingVoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="105dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/cornerstextmessagesfromme">
+
+        <ImageView
+            android:id="@+id/imgPlay"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="210dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_play_arrow_white_24dp" />
+
+        <ImageView
+            android:id="@+id/imgPause"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="210dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_pause_white_24dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="16dp"
+            android:text="00:00:00 / 00:00:00"
+            android:textSize="10sp" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="225dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/incomingVoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:clickable="true"
+            android:id="@+id/receive_imgPlay"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/play_pause_bg"
+            android:src="@drawable/ic_play_arrow_white_24dp"
+            android:focusable="true" />
+        <ImageView
+            android:clickable="true"
+            android:id="@+id/receive_imgPause"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/play_pause_bg"
+            android:src="@drawable/ic_pause_white_24dp"
+            android:visibility="gone"
+            android:focusable="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/receive_txtTime"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:textSize="10sp"
+            android:text="00:00:00 / 00:00:00"
+            android:layout_marginRight="16dp" />
+        <SeekBar
+            android:id="@+id/receive_seekBar"
+            android:layout_width="225dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:layout_marginLeft="0dp" />
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/message_receiver_image_view"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/cornerstextmessagesfromother"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="13dp"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/message_sender_image_view"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/cornerstextmessagesfromme"
+        android:scaleType="centerCrop" />
+
+
+
+
+
+</RelativeLayout>
