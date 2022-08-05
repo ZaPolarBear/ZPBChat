@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="380dp"
+    android:layout_height="60dp"
+    android:layout_marginLeft="16dp">
+
+    <ImageView
+        android:id="@+id/user_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+    <TextView
+        android:id="@+id/user_nick"
+        android:layout_width="180dp"
+        android:layout_height="23dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="70dp"
+        android:layout_alignParentTop="true"
+        android:text="text"
+        android:textAppearance="@style/main_blue"
+        android:gravity="center_vertical"
+        android:fontFamily="@font/montserrat_bold"
+        />
+
+    <TextView
+        android:id="@+id/last_message"
+        android:layout_width="135dp"
+        android:layout_height="13dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="30dp"
+        android:text="Text"
+        android:textAppearance="@style/chat_text"
+        android:gravity="center_vertical"
+        />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="43dp"
+        android:layout_height="18dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="330dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:text="time"
+        android:textAppearance="@style/chat_text"
+        android:gravity="center_vertical"
+        />
+</RelativeLayout>
