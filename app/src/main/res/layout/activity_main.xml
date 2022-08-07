@@ -5,66 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <View
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/rectangle"
+        android:layout_height="match_parent"
+        android:id="@+id/frame"
         />
-
-    <TextView
-        android:id="@+id/chat"
-        android:layout_width="122dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="@string/chat"
-        android:textAppearance="@style/chat"
-        android:fontFamily="@font/montserrat_bold"/>
-
-    <View
-        android:id="@+id/search_bar"
-        android:layout_width="360dp"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="75dp"
-        android:background="@drawable/rectangle_round" />
-
-    <TextView
-        android:layout_width="145.47dp"
-        android:layout_height="15dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="82dp"
-        android:gravity="center_vertical"
-        android:text="@string/find"
-        android:textAppearance="@style/chat_text" />
-
-    <TextView
-        android:id="@+id/messages"
-        android:layout_width="138dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="110dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:gravity="center_vertical"
-        android:text="@string/messages"
-        android:textAppearance="@style/main_blue" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/messages"
-        android:id="@+id/chat_list"/>
 
 </RelativeLayout>

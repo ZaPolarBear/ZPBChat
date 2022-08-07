@@ -3,4 +3,17 @@
     <string name="chat">Chat!</string>
     <string name="find">Поиск</string>
     <string name="messages">Сообщения</string>
+    <string name="start_text">Введите пароль и почту для входа в аккаунт</string>
+    <string name="mail_enter">Введите почту</string>
+    <string name="password_enter">Введите пароль</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="enter">ВХОД</string>
+    <string name="registration_text">Зарегистрируйтесь</string>
+    <string name="no_account">Нету аакаунта?</string>
+    <string name="reg_text">Зарегистрируйтесь в Chat!</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="nick_enter">Введите ник</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="hint_registration">Введите пароль и почту для создания аккаунта</string>
+    <string name="registration">РЕГИСТРАЦИЯ</string>
 </resources>

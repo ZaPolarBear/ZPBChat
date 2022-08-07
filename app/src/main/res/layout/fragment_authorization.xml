@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/chat_"
+        android:layout_width="280dp"
+        android:layout_height="28dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="36dp"
+        android:text="Приветсвуем в чат!"
+        android:textAppearance="@style/main_black"
+        android:gravity="center_horizontal|top"
+        android:fontFamily="@font/montserrat_bold"
+        />
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/frame_1"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/frame"
+        android:clipToOutline="true" />
+
+    <TextView
+        android:id="@+id/some_id"
+        android:layout_width="280dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="269dp"
+        android:gravity="center_horizontal|top"
+        android:text="@string/start_text"
+        android:textAppearance="@style/small_blue" />
+
+    <View
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="340dp"
+        android:background="@drawable/rectangle_round20" />
+
+    <EditText
+        android:id="@+id/mail_enter"
+        android:layout_width="174dp"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="345dp"
+        android:gravity="center_vertical"
+        android:hint="@string/mail_enter"
+        android:textAppearance="@style/small_gray"
+        />
+
+    <View
+        android:id="@+id/rectangle_1"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="425dp"
+        android:background="@drawable/rectangle_round20" />
+
+    <EditText
+        android:id="@+id/passsword_enter"
+        android:layout_width="226dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="425dp"
+        android:gravity="center_vertical"
+        android:hint="@string/password_enter"
+        android:textAppearance="@style/small_gray" />
+
+    <TextView
+        android:id="@+id/forgot_password"
+        android:layout_width="104dp"
+        android:layout_height="22dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="268dp"
+        android:layout_marginTop="527dp"
+        android:gravity="center_vertical"
+        android:text="@string/forgot_password"
+        android:textAppearance="@style/small_gray" />
+
+    <Button
+        android:id="@+id/enter"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="580dp"
+        android:background="@drawable/rectangle_fill20"
+        android:text="@string/enter" />
+
+    <TextView
+        android:id="@+id/registration_text"
+        android:layout_width="117dp"
+        android:layout_height="14dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="668dp"
+        android:text="@string/registration_text"
+        android:textAppearance="@style/small_blue"
+        android:gravity="top"
+        />
+
+    <TextView
+        android:layout_width="95dp"
+        android:layout_height="14dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="105dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="668dp"
+        android:text="@string/no_account"
+        android:textAppearance="@style/small_gray"
+        android:gravity="top"
+        />
+
+
+</RelativeLayout>

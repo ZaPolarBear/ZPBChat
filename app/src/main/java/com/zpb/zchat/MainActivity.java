@@ -10,31 +10,41 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends Activity {
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.zpb.zchat.authorization.AuthorizationFragment;
+import com.zpb.zchat.authorization.RegistrationFragment;
+
+public class MainActivity extends FragmentActivity {
 
     private RecyclerView chatListView;
+    private TextView text;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        user = mAuth.getCurrentUser();
+
         setContentView(R.layout.activity_main);
-        chatListView =  findViewById(R.id.chat_list);
-        chatListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        Fragment mFragment = null;
+        mFragment = new AuthorizationFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame, mFragment).commit();
     }
 
-    private static class ChatViewHolder extends RecyclerView.ViewHolder
-    {
-        ImageView userImage;
-        TextView lastMessage, lastTime, userNick;
-        public ChatViewHolder(@NonNull View itemView) {
-            super(itemView);
-            userImage = itemView.findViewById(R.id.user_image);
-            lastMessage = itemView.findViewById(R.id.last_message);
-            lastTime = itemView.findViewById(R.id.time);
-            userNick = itemView.findViewById(R.id.user_nick);
-        }
-    }
+
+
+
 }
