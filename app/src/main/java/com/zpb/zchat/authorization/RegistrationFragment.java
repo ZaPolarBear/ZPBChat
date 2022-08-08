@@ -63,6 +63,7 @@ public class RegistrationFragment extends Fragment {
         registerButton = view.findViewById(R.id.register);
 
         registerButton.setOnClickListener(this::OnClick);
+
     }
 
 
