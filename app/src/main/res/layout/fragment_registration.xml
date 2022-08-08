@@ -147,13 +147,14 @@
 
     <Button
         android:id="@+id/register"
-        android:layout_width="150dp"
+        android:layout_width="160dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="130dp"
+        android:layout_marginLeft="125dp"
         android:layout_marginTop="580dp"
         android:background="@drawable/rectangle_fill20"
-        android:text="@string/registration" />
+        android:text="@string/registration"
+        android:fontFamily="@font/montserrat_bold"/>
 
 </RelativeLayout>

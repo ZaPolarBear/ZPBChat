@@ -1,12 +1,16 @@
 package com.zpb.zchat.authorization;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +29,7 @@ public class AuthorizationFragment extends Fragment {
     private FirebaseAuth mAuth;
     private EditText enterMail, enterPassword;
     private Button enterButton;
+    private TextView registerText;
 
     public AuthorizationFragment() {
     }
@@ -46,9 +51,10 @@ public class AuthorizationFragment extends Fragment {
         enterMail = view.findViewById(R.id.mail_enter);
         enterPassword = view.findViewById(R.id.passsword_enter);
         enterButton = view.findViewById(R.id.enter);
+        registerText = view.findViewById(R.id.registration_text);
 
         enterButton.setOnClickListener(this::OnClick);
-
+        registerText.setOnClickListener(this::OnClick);
     }
 
     @Override
@@ -60,6 +66,14 @@ public class AuthorizationFragment extends Fragment {
         switch (view.getId()){
             case R.id.enter:
                 enterUser();
+                break;
+            case R.id.registration_text:
+                Log.d("text", "click");
+                RegistrationFragment registrationFragment = new RegistrationFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame, registrationFragment)
+                        .addToBackStack(null)
+                        .commit();
                 break;
         }
     }
@@ -95,6 +109,10 @@ public class AuthorizationFragment extends Fragment {
                             .replace(R.id.frame, mainPage)
                             .addToBackStack(null)
                             .commit();
+
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    preferences.edit().putBoolean("isLogin", true).commit();
+                    preferences.edit().putString("uid", mAuth.getCurrentUser().getUid()).commit();
                 }
             }
         });

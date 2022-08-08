@@ -1,6 +1,8 @@
 package com.zpb.zchat.authorization;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -113,12 +116,16 @@ public class RegistrationFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             User user = new User(userNick, password, FirebaseAuth.getInstance().getCurrentUser().getUid(), email);
-                            FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(userNick).setValue(user);
+                            FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
                             MainFragment mainPage = new MainFragment();
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.frame, mainPage)
                                     .addToBackStack(null)
                                     .commit();
+
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                            preferences.edit().putBoolean("isLogin", true).commit();
+                            preferences.edit().putString("uid", mAuth.getCurrentUser().getUid()).commit();
                         }
                     }
                 });
