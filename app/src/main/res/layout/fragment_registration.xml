@@ -4,16 +4,15 @@
     android:layout_height="match_parent"
     android:transitionName="RegistrationFragment">
 
-<!--    <View-->
-<!--        android:id="@+id/arrow_1"-->
-<!--        android:layout_width="33dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_alignParentLeft="true"-->
-<!--        android:layout_marginLeft="60dp"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_marginTop="18dp"-->
-<!--        android:background="@drawable/arrow"-->
-<!--        />-->
+    <View
+        android:id="@+id/arrow_1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_arrow_left" />
 
     <TextView
         android:id="@+id/chat_"
@@ -118,6 +117,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="440dp"
         android:hint="@string/password_enter"
+        android:inputType="textPassword"
         android:textAppearance="@style/chat_text"
         android:gravity="center_vertical"
         />
@@ -140,6 +140,7 @@
         android:layout_marginLeft="76dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="500dp"
+        android:inputType="textPassword"
         android:hint="@string/confirm_password"
         android:textAppearance="@style/chat_text"
         android:gravity="center_vertical"

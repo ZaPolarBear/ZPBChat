@@ -38,11 +38,10 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isLogin = preferences.getBoolean("isLogin", false);
         String uid = preferences.getString("uid", null);
-
+        isLogin = false;
         if (isLogin) {
             Fragment mFragment = null;
             mFragment = new MainFragment();
@@ -56,5 +55,12 @@ public class MainActivity extends FragmentActivity {
             fragmentManager.beginTransaction()
                     .replace(R.id.frame, mFragment).commit();
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        System.exit(0);
     }
 }

@@ -21,6 +21,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.zpb.zchat.CONST;
 import com.zpb.zchat.MainFragment;
 import com.zpb.zchat.R;
 
@@ -68,7 +74,6 @@ public class AuthorizationFragment extends Fragment {
                 enterUser();
                 break;
             case R.id.registration_text:
-                Log.d("text", "click");
                 RegistrationFragment registrationFragment = new RegistrationFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame, registrationFragment)
@@ -104,15 +109,33 @@ public class AuthorizationFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    MainFragment mainPage = new MainFragment();
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.frame, mainPage)
-                            .addToBackStack(null)
-                            .commit();
+                    Query query = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(mAuth.getCurrentUser().getUid()).child("password");Log.d("value", password);
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String rightPassword = String.valueOf(snapshot.getValue());
+                            if (rightPassword.equals(password)){
+                                MainFragment mainPage = new MainFragment();
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.frame, mainPage)
+                                        .addToBackStack(null)
+                                        .commit();
 
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                    preferences.edit().putBoolean("isLogin", true).commit();
-                    preferences.edit().putString("uid", mAuth.getCurrentUser().getUid()).commit();
+                                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                                preferences.edit().putBoolean("isLogin", true).commit();
+                                preferences.edit().putString("uid", mAuth.getCurrentUser().getUid()).commit();
+                            }
+                            else{
+                                enterPassword.setError("Неверный пароль!");
+                                enterPassword.requestFocus();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
         });

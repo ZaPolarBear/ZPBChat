@@ -81,6 +81,7 @@
         android:layout_marginLeft="100dp"
         android:layout_marginTop="425dp"
         android:gravity="center_vertical"
+        android:inputType="textPassword"
         android:hint="@string/password_enter"
         android:textAppearance="@style/small_gray" />
 
