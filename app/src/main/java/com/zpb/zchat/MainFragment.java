@@ -1,25 +1,21 @@
 package com.zpb.zchat;
 
-import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +24,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.zpb.zchat.authorization.RegistrationFragment;
 import com.zpb.zchat.chat.Chat;
 import com.zpb.zchat.chat.DialogsAdapter;
 
@@ -52,9 +47,34 @@ public class MainFragment extends Fragment {
         findUser = view.findViewById(R.id.find_user);
         chatListView = view.findViewById(R.id.chat_list);
 
-
         chatListView.setOnClickListener(this::OnClick);
         text.setOnClickListener(this::OnClick);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        chatList.clear();
+        DialogsAdapter dialogsAdapter = new DialogsAdapter(chatList);
+        String senderUid = preferences.getString("uid", null);
+        Query query = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(senderUid).child("Chats");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Chat chat = new Chat(dataSnapshot.getValue().toString(), dataSnapshot.child("LastTime").getValue().toString(), dataSnapshot.child("LastMessage").getValue().toString(), "private", "id");
+                        chatList.add(chat);
+                        chatListView.setAdapter(dialogsAdapter);
+                        chatListView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         return view;
     }
@@ -65,7 +85,7 @@ public class MainFragment extends Fragment {
         findUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                loadChats();
             }
 
             @Override
@@ -86,7 +106,7 @@ public class MainFragment extends Fragment {
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                                     String userNick = dataSnapshot.child("nickname").getValue().toString().toLowerCase();
                                     if (userNick.contains(searchUser)) {
-                                        Chat chat = new Chat(dataSnapshot.child("nickname").getValue().toString(), "test", "test", "test");
+                                        Chat chat = new Chat(dataSnapshot.child("nickname").getValue().toString(), "test", "test", "test", dataSnapshot.child("id").getValue().toString());
                                         chatList.add(chat);
                                         chatListView.setAdapter(dialogsAdapter);
                                         chatListView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -125,6 +145,34 @@ public class MainFragment extends Fragment {
         }
     }
 
+    private void loadChats() {
+        chatList.clear();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
+        DialogsAdapter dialogsAdapter = new DialogsAdapter(chatList);
+        String senderUid = preferences.getString("uid", null);
+        Query query = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(senderUid).child("Chats");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        if (dataSnapshot.exists()) {
+                            Chat chat = new Chat(dataSnapshot.getValue().toString(), dataSnapshot.child("LastTime").getValue().toString(), dataSnapshot.child("LastMessage").getValue().toString(), "private", "id");
+                            chatList.add(chat);
+                            chatListView.setAdapter(dialogsAdapter);
+                            chatListView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 }

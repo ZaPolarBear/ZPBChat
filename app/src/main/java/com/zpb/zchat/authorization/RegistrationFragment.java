@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ public class RegistrationFragment extends Fragment {
     private FirebaseAuth mAuth;
     private EditText enterPassword, enterNick, enterMail, confirmPassword;
     private Button registerButton;
+    private ImageView back;
 
     public static RegistrationFragment newInstance( ) {
         return new RegistrationFragment();
@@ -61,9 +64,10 @@ public class RegistrationFragment extends Fragment {
         enterMail = view.findViewById(R.id.mail_enter);
         confirmPassword = view.findViewById(R.id.confirm_password);
         registerButton = view.findViewById(R.id.register);
+        back = view.findViewById(R.id.back);
 
         registerButton.setOnClickListener(this::OnClick);
-
+        back.setOnClickListener(this::OnClick);
     }
 
 
@@ -71,6 +75,13 @@ public class RegistrationFragment extends Fragment {
         switch (view.getId()) {
             case R.id.register:
                 registerUser();
+                break;
+            case R.id.back:
+                AuthorizationFragment authPage = new AuthorizationFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame, authPage)
+                        .addToBackStack(null)
+                        .commit();
                 break;
         }
     }

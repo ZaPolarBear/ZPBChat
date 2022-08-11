@@ -3,22 +3,19 @@ package com.zpb.zchat.chat;
 import java.util.Date;
 
 public class Message {
-    private String from, message, type, to, messageID, time, date, name;
+    private String from, message, type, to, messageID, time;
 
 
-    public Message(String from, String message, String type, String to, String messageID, String time, String date, String name) {
+    public Message(String from, String message, String type, String to, String messageID, String time) {
         this.from = from;
         this.message = message;
         this.type = type;
         this.to = to;
         this.messageID = messageID;
         this.time = time;
-        this.date = date;
-        this.name = name;
     }
 
-    public  Message()
-    {
+    public Message() {
 
     }
 
@@ -29,7 +26,6 @@ public class Message {
     public String getText() {
         return null;
     }
-
 
 
     public Date getCreatedAt() {
@@ -44,13 +40,16 @@ public class Message {
         public Video() {
 
         }
-        public String getUrl(){
+
+        public String getUrl() {
             return url;
         }
+
         public Video(String url) {
             this.url = url;
         }
     }
+
     public static class Voice {
 
         private String url;
@@ -74,6 +73,7 @@ public class Message {
 
         }
     }
+
     public String getFrom() {
         return from;
     }
@@ -120,22 +120,6 @@ public class Message {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
 

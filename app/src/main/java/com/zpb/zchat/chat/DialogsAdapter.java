@@ -1,5 +1,8 @@
 package com.zpb.zchat.chat;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,7 +22,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.zpb.zchat.CONST;
+import com.zpb.zchat.MainActivity;
 import com.zpb.zchat.R;
+import com.zpb.zchat.authorization.AuthorizationFragment;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +34,7 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ChatView
     private List<Chat> chatList;
     private DatabaseReference firebaseDatabase;
 
-    public DialogsAdapter(List<Chat> chatList){
+    public DialogsAdapter(List<Chat> chatList) {
         this.chatList = chatList;
     }
 
@@ -42,9 +50,42 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ChatView
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         Chat chat = chatList.get(position);
+        if(chat.getReceiverUid() == "id"){
+
+        }
         holder.userNick.setText(chat.getName());
         holder.lastTime.setText(chat.getLastTime());
         holder.lastMessage.setText(chat.getLastMessage());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity activity = (MainActivity) view.getContext();
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+                String uid = preferences.getString("uid", null);
+
+                FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        if (!snapshot.child("Chats").child(chat.getName()).exists()) {
+                      //      AcceptChatRequest(uid, chat.getReceiverUid(), snapshot.child("nickname").getValue().toString(), chat.getName());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                Fragment mFragment = null;
+                mFragment = new ChatFragment(chat);
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame, mFragment).commit();
+            }
+        });
     }
 
     @Override
@@ -52,8 +93,7 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ChatView
         return chatList.size();
     }
 
-    protected static class ChatViewHolder extends RecyclerView.ViewHolder
-    {
+    protected class ChatViewHolder extends RecyclerView.ViewHolder {
 
         ImageView userImage;
         TextView lastMessage, lastTime, userNick;
@@ -65,5 +105,10 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ChatView
             lastTime = itemView.findViewById(R.id.time);
             userNick = itemView.findViewById(R.id.user_nick);
         }
+    }
+
+    private void AcceptChatRequest(String uid, String receiverUid, String sender, String receiver) {
+        FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(uid).child("Chats").child(receiver).child("nick").setValue(receiver);
+        FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(receiverUid).child("Chats").child(sender).child("nick").setValue(sender);
     }
 }

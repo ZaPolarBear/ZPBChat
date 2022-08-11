@@ -22,7 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.zpb.zchat.authorization.AuthorizationFragment;
 import com.zpb.zchat.authorization.RegistrationFragment;
 
@@ -41,8 +45,20 @@ public class MainActivity extends FragmentActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isLogin = preferences.getBoolean("isLogin", false);
         String uid = preferences.getString("uid", null);
-        isLogin = false;
+
         if (isLogin) {
+            Query query = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(uid).child("nickname");
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    preferences.edit().putString("userNick", snapshot.getValue().toString()).commit();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
             Fragment mFragment = null;
             mFragment = new MainFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -57,10 +73,10 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         System.exit(0);
     }
+
 }

@@ -14,17 +14,24 @@
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/ic_pause.xml" value="0.1095" />
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/ic_play.xml" value="0.1095" />
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/ic_play_pause_bg.xml" value="0.1095" />
+        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/image_send.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/micro.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/microphone.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/rectangle.xml" value="0.135" />
+        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/rectangle_fill.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/rectangle_fill20.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/rectangle_round.xml" value="0.135" />
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/rectangle_round20.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/send.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/vector_micro_down.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/drawable/vector_micro_up.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/layout/dialog_item.xml" value="0.152" />
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/layout/fragment_authorization.xml" value="0.2" />
-        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
-        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/layout/fragment_registration.xml" value="0.152" />
+        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/layout/fragment_chat.xml" value="0.264" />
+        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/layout/fragment_registration.xml" value="0.176" />
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/layout/image_viewer.xml" value="0.22826086956521738" />
-        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/layout/main_page.xml" value="0.264" />
+        <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/layout/main_page.xml" value="0.16799999999999998" />
         <entry key="..\:/AndroidProjects/ZChat/app/src/main/res/layout/message_types.xml" value="0.22826086956521738" />
       </map>
     </option>

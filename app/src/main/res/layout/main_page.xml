@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <View
@@ -38,13 +39,15 @@
     <EditText
         android:id="@+id/find_user"
         android:layout_width="320dp"
-        android:layout_height="40dp"
+        android:layout_height="12dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="85dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:hint="@string/find"
+        android:maxLength="16"
         android:textAppearance="@style/chat_text" />
 
     <TextView

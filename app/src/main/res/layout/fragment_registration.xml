@@ -2,10 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:transitionName="RegistrationFragment">
 
-    <View
-        android:id="@+id/arrow_1"
+    <ImageView
+        android:id="@+id/back"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentLeft="true"
@@ -16,7 +17,7 @@
 
     <TextView
         android:id="@+id/chat_"
-        android:layout_width="317dp"
+        android:layout_width="380dp"
         android:layout_height="28dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
@@ -24,19 +25,18 @@
         android:text="@string/reg_text"
         android:textAppearance="@style/main_black"
         android:gravity="center_horizontal|top"
+        android:fontFamily="@font/montserrat_bold"
         />
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/frame_1"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="115dp"
-        android:clipToOutline="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
         android:background="@drawable/frame"
-        />
+        android:clipToOutline="true" />
 
     <TextView
         android:id="@+id/some_id"
@@ -53,10 +53,10 @@
 
 
     <View
-        android:layout_width="340dp"
+        android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="60dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="320dp"
         android:background="@drawable/rectangle_round20"
@@ -76,10 +76,10 @@
         />
 
     <View
-        android:layout_width="340dp"
+        android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="60dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="380dp"
         android:background="@drawable/rectangle_round20"
@@ -94,15 +94,16 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="380dp"
         android:hint="@string/nick_enter"
+        android:maxLength="16"
         android:textAppearance="@style/chat_text"
         android:gravity="center_vertical"
         />
 
     <View
-        android:layout_width="340dp"
+        android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="60dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="440dp"
         android:background="@drawable/rectangle_round20"
@@ -123,10 +124,10 @@
         />
 
     <View
-        android:layout_width="340dp"
+        android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="60dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="500dp"
         android:background="@drawable/rectangle_round20"
@@ -152,10 +153,11 @@
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="125dp"
+        android:layout_marginLeft="120dp"
         android:layout_marginTop="580dp"
         android:background="@drawable/rectangle_fill20"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/registration"
-        android:fontFamily="@font/montserrat_bold"/>
+        android:textColor="@color/white"/>
 
 </RelativeLayout>

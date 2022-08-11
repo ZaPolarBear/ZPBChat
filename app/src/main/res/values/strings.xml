@@ -16,4 +16,5 @@
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="hint_registration">Введите пароль и почту для создания аккаунта</string>
     <string name="registration">РЕГИСТРАЦИЯ</string>
+    <string name="enter_text">Введите текст</string>
 </resources>

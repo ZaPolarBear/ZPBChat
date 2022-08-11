@@ -68,8 +68,8 @@ public class AuthorizationFragment extends Fragment {
         super.onStart();
     }
 
-    private void OnClick(View view){
-        switch (view.getId()){
+    private void OnClick(View view) {
+        switch (view.getId()) {
             case R.id.enter:
                 enterUser();
                 break;
@@ -108,34 +108,19 @@ public class AuthorizationFragment extends Fragment {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    Query query = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(mAuth.getCurrentUser().getUid()).child("password");Log.d("value", password);
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String rightPassword = String.valueOf(snapshot.getValue());
-                            if (rightPassword.equals(password)){
-                                MainFragment mainPage = new MainFragment();
-                                getActivity().getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.frame, mainPage)
-                                        .addToBackStack(null)
-                                        .commit();
+                if (task.isSuccessful()) {
+                    MainFragment mainPage = new MainFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frame, mainPage)
+                            .addToBackStack(null)
+                            .commit();
 
-                                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                                preferences.edit().putBoolean("isLogin", true).commit();
-                                preferences.edit().putString("uid", mAuth.getCurrentUser().getUid()).commit();
-                            }
-                            else{
-                                enterPassword.setError("Неверный пароль!");
-                                enterPassword.requestFocus();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    preferences.edit().putBoolean("isLogin", true).commit();
+                    preferences.edit().putString("uid", mAuth.getCurrentUser().getUid()).commit();
+                } else {
+                    enterPassword.setError("Неверный пароль!");
+                    enterPassword.requestFocus();
                 }
             }
         });
