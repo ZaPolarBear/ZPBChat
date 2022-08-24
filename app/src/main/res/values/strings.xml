@@ -17,4 +17,6 @@
     <string name="hint_registration">Введите пароль и почту для создания аккаунта</string>
     <string name="registration">РЕГИСТРАЦИЯ</string>
     <string name="enter_text">Введите текст</string>
+    <string name="save">СОХРАНИТЬ</string>
+    <string name="new_avatar">Поставьте новый аватар!</string>
 </resources>

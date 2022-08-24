@@ -10,7 +10,7 @@
         android:layout_marginEnd="110dp"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/cornerstextmessagesfromother">
+        android:background="@drawable/cornerstextmessagesfromme">
 
 
         <TextView
@@ -32,12 +32,10 @@
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:fontFamily="@font/montserrat_bold"
-            android:id="@+id/reciver_time"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="4dp"
+            android:id="@+id/receiver_time"
+            android:layout_alignEnd="@+id/receiver_message_text"
+            android:layout_alignBottom="@+id/receiver_message_text"
             android:layout_marginEnd="4dp"
-            android:paddingBottom="8dp"
             android:textColor="@color/white"
             />
     </RelativeLayout>

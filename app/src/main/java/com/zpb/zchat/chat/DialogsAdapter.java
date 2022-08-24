@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.zpb.zchat.CONST;
 import com.zpb.zchat.MainActivity;
 import com.zpb.zchat.R;
@@ -50,8 +51,8 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ChatView
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         Chat chat = chatList.get(position);
-        if(chat.getReceiverUid() == "id"){
-
+        if(!(chat.getAvatar().equals("noAvatar"))){
+            Picasso.get().load(chat.getAvatar()).into(holder.userImage);
         }
         holder.userNick.setText(chat.getName());
         holder.lastTime.setText(chat.getLastTime());
@@ -61,24 +62,6 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ChatView
             @Override
             public void onClick(View view) {
                 MainActivity activity = (MainActivity) view.getContext();
-
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-                String uid = preferences.getString("uid", null);
-
-                FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        if (!snapshot.child("Chats").child(chat.getName()).exists()) {
-                      //      AcceptChatRequest(uid, chat.getReceiverUid(), snapshot.child("nickname").getValue().toString(), chat.getName());
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
                 Fragment mFragment = null;
                 mFragment = new ChatFragment(chat);
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();

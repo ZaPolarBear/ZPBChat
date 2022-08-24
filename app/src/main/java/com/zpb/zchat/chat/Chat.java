@@ -6,17 +6,23 @@ public class Chat {
     private String LastMessage = "";
     private String type = "";
     private String receiverUid;
+    private String avatar;
 
-    public Chat(String name, String LastTime, String LastMessage, String type, String receiverUid){
+    public Chat(String name, String lastTime, String lastMessage, String type, String receiverUid, String avatar) {
         this.name = name;
-        this.LastTime = LastTime;
-        this.LastMessage = LastMessage;
+        this.LastTime = lastTime;
+        this.LastMessage = lastMessage;
         this.type = type;
         this.receiverUid = receiverUid;
+        this.avatar = avatar;
     }
 
-    public Chat() {
+    public String getAvatar() {
+        return avatar;
+    }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getType() {

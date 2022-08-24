@@ -1,16 +1,15 @@
 package com.zpb.zchat.chat;
 
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.zpb.zchat.CONST;
 import com.zpb.zchat.MainFragment;
 import com.zpb.zchat.R;
@@ -44,7 +44,7 @@ public class ChatFragment extends Fragment {
     private ImageButton sendMessage;
     private ImageButton backToAllChats;
     private ImageButton sendVoice;
-    private Image userImage;
+    private ImageView userImage;
     private ImageButton sendImage;
     private RecyclerView messagesViewList;
     private TextView nickname;
@@ -101,6 +101,7 @@ public class ChatFragment extends Fragment {
         nickname = view.findViewById(R.id.nickname);
         messageTextEnter = view.findViewById(R.id.enter_text);
         messagesViewList = view.findViewById(R.id.message_list);
+        userImage = view.findViewById(R.id.user_image);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         messagesViewList.setLayoutManager(linearLayoutManager);
 
@@ -108,10 +109,13 @@ public class ChatFragment extends Fragment {
         chatReference = database.getReference("users");
 
         userReceiver = chat.getName();
+        if(!(chat.getAvatar().equals("null"))){
+            Picasso.get().load(chat.getAvatar()).into(userImage);
+        }
         userSender = preferences.getString("userNick", null);
         senderUid = preferences.getString("uid", null);
         nickname.setText(userReceiver);
-        messageAdapter = new MessageAdapter(messageList, userSender, userReceiver);
+        messageAdapter = new MessageAdapter(messageList, userSender, userReceiver, this);
         messagesViewList.setAdapter(messageAdapter);
         messagesViewList.setItemViewCacheSize(20);
 
@@ -148,8 +152,6 @@ public class ChatFragment extends Fragment {
                         messageList.add(messages);
                         messageAdapter.notifyDataSetChanged();
                         messagesViewList.smoothScrollToPosition(messagesViewList.getAdapter().getItemCount());
-                        Log.d("chatInfo", String.valueOf(messagesViewList.getAdapter().getItemCount()));
-
                     }
 
                     @Override
@@ -197,13 +199,16 @@ public class ChatFragment extends Fragment {
     private void SendMessage() {
 
         String messageText = messageTextEnter.getText().toString();
-
-        if (TextUtils.isEmpty(messageText)) {
-            Toast.makeText(getContext(), "first write your message...", Toast.LENGTH_SHORT).show();
+        if (messageText.equals(" ")){
+            Toast.makeText(getContext(), "Wrong text", Toast.LENGTH_SHORT).show();
+            messageTextEnter.setText("");
         } else {
-            Send(messageText, "text");
+            if (TextUtils.isEmpty(messageText)) {
+                Toast.makeText(getContext(), "first write your message...", Toast.LENGTH_SHORT).show();
+            } else {
+                Send(messageText, "text");
+            }
         }
-
     }
 
     private void addLastMessage(String type, String Message) {
@@ -229,6 +234,10 @@ public class ChatFragment extends Fragment {
         chatReference.child(chat.getReceiverUid()).child("Chats").child(userSender).child("LastTime").setValue(getCurrentTime());
         chatReference.child(senderUid).child("Chats").child(userReceiver).child("TimeMill").setValue(calendar.getTimeInMillis() * -1);
         chatReference.child(chat.getReceiverUid()).child("Chats").child(userSender).child("TimeMill").setValue(calendar.getTimeInMillis() * -1);
+        chatReference.child(senderUid).child("Chats").child(userReceiver).child("nickName").setValue(userReceiver);
+        chatReference.child(chat.getReceiverUid()).child("Chats").child(userSender).child("nickName").setValue(userSender);
+        chatReference.child(senderUid).child("Chats").child(userReceiver).child("uid").setValue(chat.getReceiverUid());
+        chatReference.child(chat.getReceiverUid()).child("Chats").child(userSender).child("uid").setValue(senderUid);
     }
 
     public void addUnread() {
@@ -248,6 +257,12 @@ public class ChatFragment extends Fragment {
 
             }
         });
+    }
+
+    public void deleteMessage(Message message){
+        chatReference.child(senderUid).child("Chats").child(userReceiver).child(message.getMessageID()).removeValue();
+        chatReference.child(chat.getReceiverUid()).child("Chats").child(userSender).child(message.getMessageID()).removeValue();
+        messageAdapter.notifyDataSetChanged();
     }
 
     public void Send(String message, String type) {

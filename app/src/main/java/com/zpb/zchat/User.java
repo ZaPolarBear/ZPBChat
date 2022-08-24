@@ -6,12 +6,12 @@ public class User {
     String password;
     String id;
     String email;
+    String avatar;
 
-    public User(String nickname, String password, String id, String email) {
+    public User(String nickname, String id, String avatar) {
         this.nickname = nickname;
-        this.password = password;
         this.id = id;
-        this.email = email;
+        this.avatar = avatar;
     }
 
     public String getEmail() {

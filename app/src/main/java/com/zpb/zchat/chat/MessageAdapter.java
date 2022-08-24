@@ -6,6 +6,7 @@ import static com.google.android.material.transition.MaterialSharedAxis.X;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.zpb.zchat.CONST;
 import com.zpb.zchat.R;
 import com.zpb.zchat.chat.holders.ImageViewerActivity;
 import com.zpb.zchat.chat.holders.VoicePlayer;
@@ -37,13 +39,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     private DatabaseReference reference;
     private String messageID;
     private MessageAdapter instance = this;
+    private ChatFragment chatFragment;
 
 
 
-    public MessageAdapter(List<Message> userMessagesList, String messageSenderId, String messageReceiverId ) {
+    public MessageAdapter(List<Message> userMessagesList, String messageSenderId, String messageReceiverId, ChatFragment chatFragment) {
         this.userMessagesList = userMessagesList;
         this.messageSenderNick = messageSenderId;
         this.messageReceiverNick = messageReceiverId;
+        this.chatFragment = chatFragment;
     }
 
     public MessageAdapter(List<Message> userMessagesList, String messageSenderId) {
@@ -61,6 +65,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 
 
+
         private void handleShowView(View view) {
             if (getAdapterPosition() > X - 1) {
                 view.setVisibility(View.GONE);
@@ -75,7 +80,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             outMessage = itemView.findViewById(R.id.textMessageOutcoming);
             inMessage = itemView.findViewById(R.id.textMessageIncoming);
             inVoice = itemView.findViewById(R.id.incomingVoice);
-            //receiverMessageTime = itemView.findViewById(R.id.receiver_time);
+            receiverMessageTime = itemView.findViewById(R.id.receiver_time);
             senderMessageTime = itemView.findViewById(R.id.sender_time);
             senderMessageText = (TextView) itemView.findViewById(R.id.sender_message_text);
             receiverMessageText = (TextView) itemView.findViewById(R.id.receiver_message_text);
@@ -87,6 +92,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             senderSeekBar = itemView.findViewById(R.id.seekBar);
             senderTimeVoice = itemView.findViewById(R.id.txtTime);
             outVoice = itemView.findViewById(R.id.outcomingVoice);
+
         }
     }
 
@@ -96,8 +102,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.message_types, viewGroup, false);
-        reference = FirebaseDatabase.getInstance().getReference("users").child(messageSenderNick).child("Chats").child(messageReceiverNick).child("Messages");
-        usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+        reference = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(messageSenderNick).child("Chats").child(messageReceiverNick).child("Messages");
+        usersRef = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference().child("users");
         return new MessageViewHolder(view);
     }
 
@@ -152,11 +158,28 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         messageViewHolder.messageSenderPicture.setVisibility(View.GONE);
         messageViewHolder.messageReceiverPicture.setVisibility(View.GONE);
 
+        messageViewHolder.outMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chatFragment.deleteMessage(messages);
+            }
+        });
 
         switch (fromMessageType) {
             case "text":
                 if (fromUserID.equals(messageSenderNick)) {
                     messageViewHolder.outMessage.setVisibility(View.VISIBLE);
+                    messageViewHolder.outMessage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            usersRef.child(messageSenderNick)
+                                    .child("Chats").child(messageReceiverNick).child("Messages")
+                                    .child(messages.getMessageID()).setValue(null);
+                            usersRef.child(messageReceiverNick)
+                                    .child("Chats").child(messageSenderNick).child("Messages")
+                                    .child(messages.getMessageID()).setValue(null);
+                        }
+                    });
                     messageViewHolder.senderMessageText.setText(messages.getMessage());
                     messageViewHolder.senderMessageTime.setText(messages.getTime());
                 } else {

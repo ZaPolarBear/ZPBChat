@@ -127,8 +127,10 @@ public class RegistrationFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            User user = new User(userNick, password, FirebaseAuth.getInstance().getCurrentUser().getUid(), email);
+                            User user = new User(userNick, FirebaseAuth.getInstance().getCurrentUser().getUid(), "noAvatar");
                             FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+                            FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("avatar").setValue("noAvatar");
+
                             MainFragment mainPage = new MainFragment();
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.frame, mainPage)
