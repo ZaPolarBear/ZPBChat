@@ -77,8 +77,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
             handleShowView(itemView);
-            outMessage = itemView.findViewById(R.id.textMessageOutcoming);
-            inMessage = itemView.findViewById(R.id.textMessageIncoming);
+            outMessage = itemView.findViewById(R.id.text_outcoming);
+            inMessage = itemView.findViewById(R.id.text_incoming);
             inVoice = itemView.findViewById(R.id.incomingVoice);
             receiverMessageTime = itemView.findViewById(R.id.receiver_time);
             senderMessageTime = itemView.findViewById(R.id.sender_time);
@@ -162,6 +162,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             @Override
             public void onClick(View view) {
                 chatFragment.deleteMessage(messages);
+                Log.d("delete", "message deleted");
             }
         });
 
@@ -302,12 +303,5 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public int getItemCount() {
         return userMessagesList.size();
     }
-
-
-    public void delete(int position){
-        userMessagesList.remove(position);
-        notifyItemRemoved(position);
-    }
-
 
 }

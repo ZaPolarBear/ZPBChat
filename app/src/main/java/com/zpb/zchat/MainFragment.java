@@ -56,14 +56,15 @@ public class MainFragment extends Fragment {
         chatListView.setOnClickListener(this::OnClick);
         text.setOnClickListener(this::OnClick);
 
-        loadChats();
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        loadChats();
+
         findUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -88,7 +89,7 @@ public class MainFragment extends Fragment {
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                                     String userNick = dataSnapshot.child("nickname").getValue().toString().toLowerCase();
                                     if (userNick.contains(searchUser)) {
-                                        Chat chat = new Chat(dataSnapshot.child("nickname").getValue().toString(), "Today", "Say hello!", "private", dataSnapshot.child("id").getValue().toString(), dataSnapshot.child("avatar").toString());
+                                        Chat chat = new Chat(dataSnapshot.child("nickname").getValue().toString(), "Today", "Say hello!", "private", dataSnapshot.child("id").getValue().toString());
                                         chatList.add(chat);
                                         chatListView.setAdapter(dialogsAdapter);
                                         chatListView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -127,8 +128,10 @@ public class MainFragment extends Fragment {
                 Fragment mFragment = null;
                 mFragment = new AvatarFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.popBackStack();
                 fragmentManager.beginTransaction()
                         .replace(R.id.frame, mFragment).commit();
+
                 break;
         }
     }
@@ -149,11 +152,12 @@ public class MainFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Chat chat = new Chat(dataSnapshot.child("nickName").getValue().toString(), dataSnapshot.child("LastTime").getValue().toString(), dataSnapshot.child("LastMessage").getValue().toString(), "private", dataSnapshot.child("uid").getValue().toString(), "noAvatar");
-                        chatList.add(chat);
-                        chatListView.setAdapter(dialogsAdapter);
-                        chatListView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+                        if (dataSnapshot.child("uid").exists()) {
+                            Chat chat = new Chat(dataSnapshot.child("nickName").getValue().toString(), dataSnapshot.child("LastTime").getValue().toString(), dataSnapshot.child("LastMessage").getValue().toString(), "private", dataSnapshot.child("uid").getValue().toString());
+                            chatList.add(chat);
+                            chatListView.setAdapter(dialogsAdapter);
+                            chatListView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        }
                     }
                 }
             }

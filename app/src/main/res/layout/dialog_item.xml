@@ -9,9 +9,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:scaleX="0.2"
-        android:scaleY="0.2"/>
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/user_nick"

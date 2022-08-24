@@ -51,9 +51,23 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ChatView
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         Chat chat = chatList.get(position);
-        if(!(chat.getAvatar().equals("noAvatar"))){
-            Picasso.get().load(chat.getAvatar()).into(holder.userImage);
-        }
+
+        Query query = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(chat.getReceiverUid()).child("avatar");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Picasso.get().load(String.valueOf(snapshot.getValue())).into(holder.userImage);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         holder.userNick.setText(chat.getName());
         holder.lastTime.setText(chat.getLastTime());
         holder.lastMessage.setText(chat.getLastMessage());
@@ -90,8 +104,4 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ChatView
         }
     }
 
-    private void AcceptChatRequest(String uid, String receiverUid, String sender, String receiver) {
-        FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(uid).child("Chats").child(receiver).child("nick").setValue(receiver);
-        FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(receiverUid).child("Chats").child(sender).child("nick").setValue(sender);
-    }
 }

@@ -4,13 +4,13 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:id="@+id/textMessageIncoming"
+        android:id="@+id/text_incoming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="110dp"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/cornerstextmessagesfromme">
+        android:background="@drawable/message_other">
 
 
         <TextView
@@ -41,14 +41,14 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/textMessageOutcoming"
+        android:id="@+id/text_outcoming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="110dp"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/cornerstextmessagesfromme">
+        android:background="@drawable/message_me">
 
         <TextView
             android:id="@+id/sender_time"
@@ -84,7 +84,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/cornerstextmessagesfromme">
+        android:background="@drawable/message_me">
 
         <ImageView
             android:id="@+id/imgPlay"
@@ -175,7 +175,7 @@
         android:id="@+id/message_receiver_image_view"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:background="@drawable/cornerstextmessagesfromother"
+        android:background="@drawable/message_other"
         android:layout_alignParentStart="true"
         android:layout_marginStart="50dp"
         android:layout_marginTop="13dp"
@@ -190,7 +190,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/cornerstextmessagesfromme"
+        android:background="@drawable/message_me"
         android:scaleType="centerCrop" />
 
 

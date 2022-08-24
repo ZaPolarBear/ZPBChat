@@ -6,7 +6,7 @@
                 android:bottomRightRadius="16dp"
                 android:bottomLeftRadius="0dp"
                 android:topRightRadius="16dp"/>
-            <solid android:color="@color/cardview_shadow_end_color"/>
+            <solid android:color="@color/common_google_signin_btn_text_dark_disabled"/>
         </shape>
     </item>
 </selector>

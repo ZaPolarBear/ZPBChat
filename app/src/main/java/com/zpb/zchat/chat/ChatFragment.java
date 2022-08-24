@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.zpb.zchat.CONST;
@@ -109,9 +110,23 @@ public class ChatFragment extends Fragment {
         chatReference = database.getReference("users");
 
         userReceiver = chat.getName();
-        if(!(chat.getAvatar().equals("null"))){
-            Picasso.get().load(chat.getAvatar()).into(userImage);
-        }
+
+        Query query = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(chat.getReceiverUid()).child("avatar");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Picasso.get().load(String.valueOf(snapshot.getValue())).into(userImage);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         userSender = preferences.getString("userNick", null);
         senderUid = preferences.getString("uid", null);
         nickname.setText(userReceiver);
@@ -214,19 +229,16 @@ public class ChatFragment extends Fragment {
     private void addLastMessage(String type, String Message) {
         switch (type) {
             case "text":
-                addType("text");
                 chatReference.child(senderUid).child("Chats").child(userReceiver).child("LastMessage").setValue(Message);
                 chatReference.child(chat.getReceiverUid()).child("Chats").child(userSender).child("LastMessage").setValue(Message);
                 break;
             case "voice":
-                addType("voice");
                 chatReference.child(senderUid).child("Chats").child(userReceiver).child("LastMessage").setValue("Голосовое сообщение");
                 chatReference.child(chat.getReceiverUid()).child("Chats").child(userSender).child("LastMessage").setValue("Голосовое сообщение");
                 break;
             case "image":
                 chatReference.child(senderUid).child("Chats").child(userReceiver).child("LastMessage").setValue("Фотография");
                 chatReference.child(chat.getReceiverUid()).child("Chats").child(userSender).child("LastMessage").setValue("Фотография");
-                addType("image");
                 break;
         }
         Calendar calendar = Calendar.getInstance();
