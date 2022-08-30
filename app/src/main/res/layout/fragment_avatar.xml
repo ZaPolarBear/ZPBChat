@@ -14,15 +14,13 @@
         android:background="@drawable/ic_arrow_left"
         />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
         android:layout_width="240dp"
         android:layout_height="240dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="80dp"
-        android:layout_marginTop="120dp"
-        android:background="@drawable/rectangle_gray_fill" />
-
+        android:layout_marginTop="120dp"/>
 
     <TextView
         android:layout_width="250dp"

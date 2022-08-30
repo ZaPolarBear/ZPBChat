@@ -13,16 +13,14 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/rectangle">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_image"
-            android:layout_marginTop="5dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="40dp"
-            android:scaleType="fitCenter"
-            />
+            android:layout_marginTop="7dp" />
 
         <ImageButton
             android:id="@+id/back"

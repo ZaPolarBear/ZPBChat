@@ -36,9 +36,11 @@ import com.zpb.zchat.CONST;
 import com.zpb.zchat.MainFragment;
 import com.zpb.zchat.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AvatarFragment extends Fragment {
 
-    private ImageView avatar;
+    private CircleImageView avatar;
     private Button save;
     private Intent intent;
     private String imageUrl = "";
@@ -109,7 +111,6 @@ public class AvatarFragment extends Fragment {
                 break;
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

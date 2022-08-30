@@ -47,13 +47,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ChatFragment extends Fragment {
 
     private EditText messageTextEnter;
     private ImageButton sendMessage;
     private ImageButton backToAllChats;
     private ImageButton sendVoice;
-    private ImageView userImage;
+    private CircleImageView userImage;
     private ImageButton sendImage;
     private RecyclerView messagesViewList;
     private TextView nickname;

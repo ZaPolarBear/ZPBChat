@@ -30,6 +30,8 @@ import com.zpb.zchat.authorization.AuthorizationFragment;
 import java.util.List;
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ChatViewHolder> {
 
     private List<Chat> chatList;
@@ -92,7 +94,7 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ChatView
 
     protected class ChatViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView userImage;
+        CircleImageView userImage;
         TextView lastMessage, lastTime, userNick;
 
         public ChatViewHolder(@NonNull View itemView) {
