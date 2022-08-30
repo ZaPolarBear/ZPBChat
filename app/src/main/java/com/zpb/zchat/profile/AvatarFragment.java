@@ -126,7 +126,7 @@ public class AvatarFragment extends Fragment {
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Images");
 
-        DatabaseReference userKeyRef = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").getRoot().child(id).child("avater").push();
+        DatabaseReference userKeyRef = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").getRoot().child(id).child("avatar").push();
 
         final String messagePushID = userKeyRef.getKey();
 

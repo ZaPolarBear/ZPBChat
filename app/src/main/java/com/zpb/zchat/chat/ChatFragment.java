@@ -1,6 +1,10 @@
 package com.zpb.zchat.chat;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -19,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
@@ -28,6 +33,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
 import com.zpb.zchat.CONST;
 import com.zpb.zchat.MainFragment;
@@ -60,12 +68,10 @@ public class ChatFragment extends Fragment {
 
     private String senderUid;
     private String userSender, userReceiver;
+    private String imageUrl = "";
+    private Uri imageUri;
     private Chat chat;
-
-
-    public ChatFragment() {
-
-    }
+    private Intent intent;
 
     public ChatFragment(Chat chat) {
         this.chat = chat;
@@ -108,6 +114,7 @@ public class ChatFragment extends Fragment {
 
         database = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl);
         chatReference = database.getReference("users");
+        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
         userReceiver = chat.getName();
 
@@ -133,6 +140,13 @@ public class ChatFragment extends Fragment {
         messageAdapter = new MessageAdapter(messageList, userSender, userReceiver, this);
         messagesViewList.setAdapter(messageAdapter);
         messagesViewList.setItemViewCacheSize(20);
+
+        sendImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SendImage();
+            }
+        });
 
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,24 +205,10 @@ public class ChatFragment extends Fragment {
                 });
     }
 
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
+    private void SendImage(){
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, 443);
     }
 
     private void SendMessage() {
@@ -269,6 +269,41 @@ public class ChatFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 443 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            imageUri = data.getData();
+
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Images");
+
+            DatabaseReference userKeyRef = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").getRoot().child(senderUid).child("Chats").push();
+
+            final String messagePushID = userKeyRef.getKey();
+
+            final StorageReference filePath = storageReference.child(messagePushID + "." + "jpg");
+
+            StorageTask uploadTask = filePath.putFile(imageUri);
+            uploadTask.continueWithTask(new Continuation() {
+                @Override
+                public Object then(@NonNull Task task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return filePath.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    Uri downloadUrl = task.getResult();
+                    imageUrl = downloadUrl.toString();
+                    Send(imageUrl, "image");
+                }
+            });
+        }
     }
 
     public void deleteMessage(Message message){
