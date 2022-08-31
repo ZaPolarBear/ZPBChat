@@ -29,6 +29,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.zpb.zchat.authorization.AuthorizationFragment;
 import com.zpb.zchat.authorization.RegistrationFragment;
+import com.zpb.zchat.chat.ChatFragment;
 
 public class MainActivity extends FragmentActivity {
 
@@ -36,6 +37,7 @@ public class MainActivity extends FragmentActivity {
     private TextView text;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class MainActivity extends FragmentActivity {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isLogin = preferences.getBoolean("isLogin", false);
-        String uid = preferences.getString("uid", null);
+        uid = preferences.getString("uid", null);
 
         if (isLogin) {
             Query query = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(uid).child("nickname");
@@ -79,4 +81,28 @@ public class MainActivity extends FragmentActivity {
         System.exit(0);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setStatus("online");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        setStatus("offline");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setStatus("offline");
+    }
+
+    private void setStatus(String status) {
+        if (!uid.isEmpty()) {
+            FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(uid).child("status").setValue(status);
+            FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(uid).child("inAppTime").setValue(ChatFragment.getCurrentTime());
+        }
+    }
 }

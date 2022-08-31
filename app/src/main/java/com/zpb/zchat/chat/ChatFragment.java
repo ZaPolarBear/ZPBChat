@@ -111,6 +111,7 @@ public class ChatFragment extends Fragment {
         messageTextEnter = view.findViewById(R.id.enter_text);
         messagesViewList = view.findViewById(R.id.message_list);
         userImage = view.findViewById(R.id.user_image);
+        lastSeen = view.findViewById(R.id.last_seen);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         messagesViewList.setLayoutManager(linearLayoutManager);
 
@@ -120,14 +121,19 @@ public class ChatFragment extends Fragment {
 
         userReceiver = chat.getName();
 
-        Query query = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(chat.getReceiverUid()).child("avatar");
+        Query query = FirebaseDatabase.getInstance(CONST.RealtimeDatabaseUrl).getReference("users").child(chat.getReceiverUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    Picasso.get().load(String.valueOf(snapshot.getValue())).into(userImage);
+                if (snapshot.child("avatar").exists()) {
+                    Picasso.get().load(String.valueOf(snapshot.child("avatar").getValue())).into(userImage);
                 }
-
+                if (snapshot.child("status").toString().contains("on")){
+                    lastSeen.setText("online");
+                }
+                else {
+                    lastSeen.setText(snapshot.child("inAppTime").getValue().toString());
+                }
             }
 
             @Override
@@ -361,7 +367,7 @@ public class ChatFragment extends Fragment {
         });
     }
 
-    private static String getCurrentTime() {
+    public static String getCurrentTime() {
         String time;
         final Calendar c = Calendar.getInstance();
         int hours = c.get(Calendar.HOUR_OF_DAY);
